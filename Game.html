@@ -7,7 +7,6 @@
     <script>
     var canvas , canvasContext;
         
-        
         window.onload = function(){
             canvas= document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
@@ -15,8 +14,17 @@
             setInterval(mainloop, 1000/50);
         }
         
+    var playerXpos = 0;     
+    var playerYpos = 0;     
+    var playerXspeed = 3;     
+    var playerYspeed = 3;     
+    var PLAYER_SIZE = 20;
+        
         function mainloop(){
-             colorRect(0,0,canvas.width,canvas.height,'black')
+             colorRect(0,0,canvas.width,canvas.height,'black')//bg
+            colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'red');//player
+            PlayerMove(playerXspeed,playerYspeed)
+            
         }
         
         function colorRect(x,y,w,h,c){
@@ -24,5 +32,10 @@
         canvasContext.fillRect(x,y,w,h);
         }
         
+        function PlayerMove(){
+            playerXpos += playerXspeed;
+            playerYpos += playerYspeed;
+        }
+            
     </script>
 </body>
