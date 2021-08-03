@@ -27,8 +27,10 @@
 
         const RIGHT_KEY = 39;
         const LEFT_KEY = 37;
+        const DOWN_KEY = 40;
         var rightKeyPreased = false;
         var leftKeyPreased = false;
+        var downKeyPreased = false;
 
 
         function mainloop() {
@@ -49,6 +51,8 @@
             }
             if (evt.keyCode == LEFT_KEY) {
                 leftKeyPreased = true;
+            }if (evt.keyCode == DOWN_KEY) {
+                downKeyPreased = true;
             }
         }
 
@@ -58,6 +62,8 @@
             }
             if (evt.keyCode == LEFT_KEY) {
                 leftKeyPreased = false;
+            }if (evt.keyCode == DOWN_KEY) {
+                downKeyPreased = false;
             }
         }
 
@@ -67,6 +73,9 @@
             }
             if(leftKeyPreased){
                 playerXpos -= playerXspeed;
+            }
+            if(downKeyPreased){
+                playerYpos += playerYspeed;
             }
 //            playerYpos += playerYspeed;
         }
