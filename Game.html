@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
         var canvas, canvasContext;
 
@@ -19,31 +19,112 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-        var playerXpos = 0;
-        var playerYpos = 0;
-        var playerXspeed = 3;
-        var playerYspeed = 3;
-        var PLAYER_SIZE = 20;
+        var playerXpos = 400;
+        var playerYpos = 400;
+        var playerXspeed = 4;
+        var playerYspeed = 4;
+        var PLAYER_SIZE = 15;
+
+        //        var eXpos = 0;
+        //        var eYpos = 0;
+        //        var eXspeed = 7;
+        //        var eYspeed = 7;   
+        //        var ENEMY_SIZE = 50;
+
 
         const RIGHT_KEY = 39;
+        const LEFT_KEY = 37;
+        const DOWN_KEY = 40;
+        const UP_KEY = 38;
         var rightKeyPreased = false;
+        var leftKeyPreased = false;
+        var downKeyPreased = false;
+        var upKeyPreased = false;
 
-
+        var enemies = [];
+        var starting = true;
+        var diff = prompt("Easy or Hard");
+        console.log(diff);
+        var easy = true;
+        var hard = true;
+        var ecount = true;
+            
+            
+        
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black') //bg
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); //player
-            PlayerMove()
+            //            colorRect(eXpos, eYpos, ENEMY_SIZE, ENEMY_SIZE, 'grey');
+        if(diff = hard){
+            ecount = 5
+        }else {
+            ecount = 1
+        }
+            if (starting) {
+                if (diff == hard){
+                    for (var i = ecount; i < 1; i++) {
+                        makeEnemy();
+                    }
+                starting = false;
+                } };
 
+            
+            PlayerMove();
+            EnemyMove();
+            drawenemy();
+        }
+
+        function makeEnemy() {
+            var ENEMY_SIZE = 25;
+            var eXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
+            var eYpos = 0;
+            var eXspeed = 7;
+            var eYspeed = 7;
+            var enemy = {
+                eXpos: eXpos,
+                eYpos: eYpos,
+                ENEMY_SIZE: ENEMY_SIZE,
+                eXspeed: eXspeed,
+                eYspeed: eYspeed
+            }
+            enemies.push(enemy);
+        }
+
+        function EnemyMove() {
+            enemies.forEach(function(e, i, array) {
+
+                e.eYpos += e.eYspeed;
+                if (e.eYpos > canvas.height) {
+                    e.eYpos = 0
+                    e.eYspeed = Math.floor(Math.random(i) * (15 - 7) + 5);
+                    e.eXpos = Math.floor(Math.random() * (canvas.width - 0) + 5)
+                }
+            });
+        }
+
+        function drawenemy() {
+            enemies.forEach(function(e, i, array) {
+                colorRect(e.eXpos, e.eYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'white');
+            });
         }
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
-        
+
         function keyPressed(evt) {
             if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPreased = true;
+            }
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPreased = true;
+            }
+            if (evt.keyCode == DOWN_KEY) {
+                downKeyPreased = true;
+            }
+            if (evt.keyCode == UP_KEY) {
+                upKeyPreased = true;
             }
         }
 
@@ -51,15 +132,31 @@
             if (evt.keyCode == RIGHT_KEY) {
                 rightKeyPreased = false;
             }
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPreased = false;
+            }
+            if (evt.keyCode == DOWN_KEY) {
+                downKeyPreased = false;
+            }
+            if (evt.keyCode == UP_KEY) {
+                upKeyPreased = false;
+            }
         }
 
         function PlayerMove() {
-            if(rightKeyPreased){   
-            playerXpos += playerXspeed;
+            if (rightKeyPreased && playerXpos < canvas.width * 0.958) {
+                playerXpos += playerXspeed;
             }
-//            playerYpos += playerYspeed;
+            if (leftKeyPreased && playerXpos > canvas.width * 0.01) {
+                playerXpos -= playerXspeed;
+            }
+            if (downKeyPreased && playerYpos < canvas.height * 0.958) {
+                playerYpos += playerYspeed;
+            }
+            if (upKeyPreased && playerYpos > canvas.height * 0.01) {
+                playerYpos -= playerYspeed;
+            }
         }
-
 
     </script>
 </body>
