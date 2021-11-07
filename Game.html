@@ -48,7 +48,6 @@
         var playing = true;
         var score = 0;
         var gameRun = true;
-        var end = false;
 
         var userName = '';
         while (userName == '' || userName == null) {
@@ -95,8 +94,8 @@
                     // point();
                 }
             } else {
-                colorRect(0, 0, canvas.width, canvas.height, );
-                colorText(userName + 'scored: ' + score, 100, 50, '40px Arial', 'black');
+                colorRect(0, 0, canvas.width, canvas.height, 'red');
+                colorText(userName + ' ' + 'scored: ' + score, 100, 50, '40px Arial', 'black');
             }
         } //End Function
 
@@ -133,6 +132,7 @@
                     playerXpos = 0;
                     playerYpos = canvas.height - PLAYER_SIZE;
                     console.log("hit"); //Colosion palyer and enemy
+                    playing = false;
                     starting = false;
                     gameRun = false;
                 }
@@ -140,11 +140,7 @@
             });
         } //End Function
 
-        function endGame() {
-            starting = false;
-            colorRect(0, 0, canvas.width, canvas.height, 'red'); //end bg
 
-        }
 
 
         function drawenemy() { //Draw Enemy
